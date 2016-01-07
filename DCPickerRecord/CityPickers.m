@@ -41,7 +41,9 @@
 }
 
 -(NSString *)dc_pickerViewInitTileWithRow:(NSInteger)row inComponent:(NSInteger)component {
-    NSString *title = (component == 0) ? ((CityModel *)self.cityArray[row][0]).province : ((CityModel *)self.cityArray[[self dc_rowOfComponent:0]][row]).name;
+    NSString *title = (component == 0) ?
+    ((CityModel *)self.cityArray[row][0]).province :
+    ((CityModel *)self.cityArray[[self dc_rowOfComponent:0]][row]).name;
     return title;
 }
 
@@ -52,7 +54,9 @@
     }
     if (self.dc_didSelectedBlock) {
         NSArray *cityArray = self.cityArray[[self dc_rowOfComponent:0]];
-        CityModel *city =  ([self dc_rowOfComponent:1] > cityArray.count - 1) ? cityArray[cityArray.count - 1] : cityArray[[self dc_rowOfComponent:1]];
+        CityModel *city =  ([self dc_rowOfComponent:1] > cityArray.count - 1) ?
+                            cityArray[cityArray.count - 1] :
+                            cityArray[[self dc_rowOfComponent:1]];
         
         self.dc_didSelectedBlock([NSIndexPath indexPathForRow:[self dc_rowOfComponent:1] inComponent:1],city);
     }

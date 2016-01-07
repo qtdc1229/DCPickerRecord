@@ -206,6 +206,7 @@
 				6BC1D69D1B897A21002B3C35 /* Sources */,
 				6BC1D69E1B897A21002B3C35 /* Frameworks */,
 				6BC1D69F1B897A21002B3C35 /* Resources */,
+				6B335F151C3E681700578EF3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -290,6 +291,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6B335F151C3E681700578EF3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "REV=`date +%y%m%d`\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${REV}\" \"${TARGET_BUILD_DIR}\"/${INFOPLIST_PATH}";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6BC1D69D1B897A21002B3C35 /* Sources */ = {
@@ -437,7 +454,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = DCPickerSourceRecord/Info.plist;
+				INFOPLIST_FILE = DCPickerRecord/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dingc.$(PRODUCT_NAME:rfc1034identifier)";
@@ -449,7 +466,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = DCPickerSourceRecord/Info.plist;
+				INFOPLIST_FILE = DCPickerRecord/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.dingc.$(PRODUCT_NAME:rfc1034identifier)";
@@ -463,7 +480,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
-				INFOPLIST_FILE = DCPickerSourceRecordDemoTests/Info.plist;
+				INFOPLIST_FILE = DCPickerRecordDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingc.DCPickerSourceRecordDemoTests;
@@ -476,7 +493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = DCPickerSourceRecordDemoTests/Info.plist;
+				INFOPLIST_FILE = DCPickerRecordDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dingc.DCPickerSourceRecordDemoTests;

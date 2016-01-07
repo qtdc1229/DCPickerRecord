@@ -33,8 +33,6 @@
  */
 - (NSString *)dc_pickerViewInitTileWithRow:(NSInteger)row inComponent:(NSInteger)component;
 /**
- *  @author dingc
- *
  *  @brief picker did select a row
  *
  *  @param row       row
@@ -73,19 +71,27 @@
 @property (nonatomic, readonly) NSMutableArray    *rowOfComponent;
 
 //@required
-// picker view如何选择
-- (void)dc_PickerViewSelectedComponentsRow:(UIPickerView *)pickerView;
-// picker确定后的处理
-- (void)pickerConfirm;
+
 //@optional
-//初始化component选项
+/**
+ *  @brief 重新选择上次已选数据
+ *
+ *  @param pickerView pickerView
+ */
+- (void)dc_PickerViewSelectedComponentsRow:(UIPickerView *)pickerView;
+
+// 初始化 列数据(components) 用于保存每一列的行
 - (void)dc_initRowOfComponents:(NSInteger)component;
 
+// 返回 某一列的已选行数
 - (NSInteger)dc_rowOfComponent:(NSInteger)component;
-// back 
+
+// 数据清零
 - (void)backRowOfComponentToZero;
+
 //获取之前的选择信息
 - (NSInteger)readOldDataOfComponent:(NSInteger)component;
+
 //保存选择信息
 - (void)saveRowOfComponent:(NSInteger)component row:(NSInteger)row;
 @end

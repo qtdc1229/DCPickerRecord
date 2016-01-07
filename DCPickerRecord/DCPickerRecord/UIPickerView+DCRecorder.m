@@ -26,6 +26,7 @@
     if ([DCPickerRecorder shareRecorder].currentPickerRecord) {
         ret = [[DCPickerRecorder shareRecorder].currentPickerRecord dc_pickerViewInitTileWithRow:row inComponent:component];
     }
+    
     return ret;
 }
 

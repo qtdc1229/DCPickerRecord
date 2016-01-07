@@ -10,8 +10,8 @@
 #define DCCommonConstants_h
 
 
-
 #endif /* DCCommonConstants_h */
+#define DC_CONSTANTS_VERSION @"1.1.0"
 
 #if __has_feature(objc_arc)
 

@@ -19,6 +19,10 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
 
 @implementation DCPickerRecorder
 
++(void)load {
+        NSLog(@"-------------- DCPickerRecord Version %@ --------------",DC_CONSTANTS_VERSION);
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -38,7 +42,8 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
     return __shareDCPickerSourceRecorder;
 }
 
-- (void)recordDataClass:(Class)dataClass didSelectedAction:(id (^)())didSelectedAction {
+- (void)dc_pickerView:(UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(id (^)())didSelectedAction {
+    NSAssert(pickerView, @"pickerView must nonull");
     if ([dataClass isSubclassOfClass:[DCPickerRecordModel class]]) {
         _pickerDataClass = dataClass;
         self.currentPickerRecord = [_pickerDataClass shareRecordModel];
@@ -46,6 +51,8 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
     if (didSelectedAction && self.currentPickerRecord) {
         self.currentPickerRecord.dc_didSelectedBlock = didSelectedAction;
     }
+    [pickerView reloadAllComponents];
+    [self.currentPickerRecord dc_PickerViewSelectedComponentsRow:pickerView];
 }
 
 @end

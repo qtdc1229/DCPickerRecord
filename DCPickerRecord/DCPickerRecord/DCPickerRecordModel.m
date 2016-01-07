@@ -70,7 +70,7 @@
 - (void)dc_PickerViewSelectedComponentsRow:(UIPickerView *)pickerView {
     NSNumber *rowNumber = nil;
     for (int i = 0;i < pickerView.numberOfComponents;i++) {
-        rowNumber = self.rowOfComponent[i];
+        rowNumber = _rowOfComponent[i];
         if (rowNumber) {
             [pickerView selectRow:[rowNumber intValue] inComponent:i animated:NO];
         }else if (i == 0) {
@@ -81,12 +81,12 @@
 }
 
 - (void)dc_initRowOfComponents:(NSInteger)components {
-    if (!self.rowOfComponent || [self.rowOfComponent count] < components) {
-        if (!self.rowOfComponent) {
+    if (!_rowOfComponent || self.numberOfComponent < components) {
+        if (!_rowOfComponent) {
             self.rowOfComponent = [NSMutableArray arrayWithCapacity:0];
         }
-        for (NSInteger i = MAX([self.rowOfComponent count], 0); i < components; i++) {
-            [self.rowOfComponent addObject:[NSNumber numberWithInteger:[self readOldDataOfComponent:i]]];
+        for (NSInteger i = MAX(self.numberOfComponent, 0); i < components; i++) {
+            [_rowOfComponent addObject:[NSNumber numberWithInteger:[self readOldDataOfComponent:i]]];
         }
     }
 }
@@ -99,7 +99,7 @@
 
 - (NSInteger)dc_rowOfComponent:(NSInteger)component {
     NSInteger row = 0;
-    if (component < [_rowOfComponent count]) {
+    if (component < self.numberOfComponent) {
         row = [_rowOfComponent[component] integerValue];
     }
     return row;
@@ -110,30 +110,26 @@
     return 0;
 }
 
-- (void)pickerConfirm {
-    
-}
-
 - (void)backRowOfComponentToZero {
-    if (self.rowOfComponent) {
-        for (int i = 0; i < [self.rowOfComponent count]; i++) {
-            [self.rowOfComponent replaceObjectAtIndex:i withObject:[NSNumber numberWithInteger:0]];
+    if (_rowOfComponent) {
+        for (int i = 0; i < self.numberOfComponent; i++) {
+            [_rowOfComponent replaceObjectAtIndex:i withObject:[NSNumber numberWithInteger:0]];
         }
     }
 }
 
 - (void)saveRowOfComponent:(NSInteger)component row:(NSInteger)row {
     NSLog(@"component :%ld, row :%ld",(long)component,(long)row);
-    if (component < [_rowOfComponent count]) {
+    if (component < self.numberOfComponent) {
         [_rowOfComponent replaceObjectAtIndex:component withObject:[NSNumber numberWithInteger:row]];
-    }else if (component == [_rowOfComponent count]) {
+    }else if (component == self.numberOfComponent) {
         [_rowOfComponent addObject:[NSNumber numberWithInteger:row]];
     }
 }
 
 #pragma mark - =============== prive methods ===============
 -(NSInteger)numberOfComponent {
-    return [self dc_pickerViewNumberOfComponent];
+    return self.rowOfComponent.count;
 }
 
 
