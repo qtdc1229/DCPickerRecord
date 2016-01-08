@@ -14,19 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic ,weak) Class                               pickerDataClass;
 @property (nonatomic ,readonly) DCPickerRecordModel             *currentPickerRecord;
 
-@property (nonatomic, copy, setter = bk_setCancelBlock:) NSInteger (^dc_)(void);
 
-/** The block to be fired before the alert view will show. */
-@property (nonatomic, copy, setter = bk_setWillShowBlock:) void (^bk_willShowBlock)(UIAlertView *alertView);
+/** The block to be fired when set components. */
+@property (nonatomic, copy, setter = dc_setNumberOfComponentsBlock:) NSInteger (^dc_numberOfComponentsBlock)(UIPickerView *pickerView);
 
-/** The block to be fired when the alert view shows. */
-@property (nonatomic, copy, setter = bk_setDidShowBlock:) void (^bk_didShowBlock)(UIAlertView *alertView);
+/** The block to be fired set titles in index. */
+@property (nonatomic, copy, setter = dc_setInitTileBlock:) void (^dc_initTileBlock)(NSIndexPath *index);
 
-/** The block to be fired before the alert view will dismiss. */
-@property (nonatomic, copy, setter = bk_setWillDismissBlock:) void (^bk_willDismissBlock)(UIAlertView *alertView, NSInteger buttonIndex);
-
-/** The block to be fired after the alert view dismisses. */
-@property (nonatomic, copy, setter = bk_setDidDismissBlock:) void (^bk_didDismissBlock)(UIAlertView *alertView, NSInteger buttonIndex);
+/** The block to be fired when set row in component. */
+@property (nonatomic, copy, setter = dc_setNumberOfRowsBlock:) void (^dc_numberOfRowsBlock)(NSInteger component,UIPickerView *pickerView);
 
 
 + (instancetype)shareRecorder;
