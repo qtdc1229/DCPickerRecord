@@ -20,9 +20,8 @@
     [super viewDidLoad];
     [[DCPickerRecorder shareRecorder] dc_pickerView:self.pickerView
                                     recordDataClass:NSClassFromString(@"CityPickers")
-                                  didSelectedAction:^id(NSIndexPath *index,CityModel *city) {
+                                  didSelectedAction:^void(NSIndexPath *index,CityModel *city) {
         self.label.text = [NSString stringWithFormat:@"选择了 %@省 %@ 市",city.province,city.name];
-        return nil;
     }];
     //    [self.pickerView reloadAllComponents];
     // Do any additional setup after loading the view, typically from a nib.

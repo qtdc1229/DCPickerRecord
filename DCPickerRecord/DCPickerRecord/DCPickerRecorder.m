@@ -42,7 +42,7 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
     return __shareDCPickerSourceRecorder;
 }
 
-- (void)dc_pickerView:(UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(id (^)())didSelectedAction {
+- (void)dc_pickerView:(UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(void (^)())didSelectedAction {
     NSAssert(pickerView, @"pickerView must nonull");
     if ([dataClass isSubclassOfClass:[DCPickerRecordModel class]]) {
         _pickerDataClass = dataClass;

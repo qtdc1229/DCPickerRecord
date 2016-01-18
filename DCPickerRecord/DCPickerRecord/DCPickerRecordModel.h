@@ -66,7 +66,7 @@
 
 @interface DCPickerRecordModel : NSObject <DCPickerRecordModelProtocol>
 
-@property (nonatomic ,copy) id (^dc_didSelectedBlock)();
+@property (nonatomic ,copy) void (^dc_didSelectedBlock)();
 @property (nonatomic, readonly) NSInteger         numberOfComponent;
 @property (nonatomic, readonly) NSMutableArray    *rowOfComponent;
 

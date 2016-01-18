@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)shareRecorder;
 
-- (void)dc_pickerView:(nonnull UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(id (^)())didSelectedAction;
+- (void)dc_pickerView:(nonnull UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(void (^)())didSelectedAction;
 
 @end
 NS_ASSUME_NONNULL_END
