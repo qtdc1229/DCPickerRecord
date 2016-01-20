@@ -14,17 +14,19 @@ DCPickerRecord 是用来简化UIPickerView 管理以及使用的组件。
     return ret;
 }
 
--(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
 		//选择某一行后的行动
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     NSInteger ret = 0;	
+    // 总共的列数
     return ret;
 }
 
--(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
 		 NSInteger ret = 0;
+		 //某一列的行数
 		 return ret;
 }
 ```
