@@ -82,8 +82,6 @@
     @autoreleasepool {
         [self bk_registerDynamicDataSource];
         [self bk_registerDynamicDelegate];
-//        [self bk_linkDataSourceMethods:@{}];
-//        [self bk_linkDelegateMethods:@{}];
     }
 }
 
