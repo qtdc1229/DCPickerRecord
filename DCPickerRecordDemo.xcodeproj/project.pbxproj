@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		6B1477721C157CD7008F0EBF /* A2BlockInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */; };
 		6B1477731C157CD7008F0EBF /* A2DynamicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1477681C157CD7008F0EBF /* A2DynamicDelegate.m */; };
-		6B1477741C157CD7008F0EBF /* NSCache+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B14776B1C157CD7008F0EBF /* NSCache+BlocksKit.m */; };
-		6B1477751C157CD7008F0EBF /* NSURLConnection+BlocksKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B14776D1C157CD7008F0EBF /* NSURLConnection+BlocksKit.m */; };
 		6B1477761C157CD7008F0EBF /* NSObject+A2BlockDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B14776F1C157CD7008F0EBF /* NSObject+A2BlockDelegate.m */; };
 		6B1477771C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1477711C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m */; };
 		6B4C38F21C294C6D005FEB0E /* UIPickerView+DCRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C38F11C294C6D005FEB0E /* UIPickerView+DCRecorder.m */; };
@@ -43,10 +41,6 @@
 		6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A2BlockInvocation.m; sourceTree = "<group>"; };
 		6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2DynamicDelegate.h; sourceTree = "<group>"; };
 		6B1477681C157CD7008F0EBF /* A2DynamicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A2DynamicDelegate.m; sourceTree = "<group>"; };
-		6B14776A1C157CD7008F0EBF /* NSCache+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSCache+BlocksKit.h"; sourceTree = "<group>"; };
-		6B14776B1C157CD7008F0EBF /* NSCache+BlocksKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSCache+BlocksKit.m"; sourceTree = "<group>"; };
-		6B14776C1C157CD7008F0EBF /* NSURLConnection+BlocksKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLConnection+BlocksKit.h"; sourceTree = "<group>"; };
-		6B14776D1C157CD7008F0EBF /* NSURLConnection+BlocksKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLConnection+BlocksKit.m"; sourceTree = "<group>"; };
 		6B14776E1C157CD7008F0EBF /* NSObject+A2BlockDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+A2BlockDelegate.h"; sourceTree = "<group>"; };
 		6B14776F1C157CD7008F0EBF /* NSObject+A2BlockDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+A2BlockDelegate.m"; sourceTree = "<group>"; };
 		6B1477701C157CD7008F0EBF /* NSObject+A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+A2DynamicDelegate.h"; sourceTree = "<group>"; };
@@ -104,24 +98,12 @@
 				6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */,
 				6B1477681C157CD7008F0EBF /* A2DynamicDelegate.m */,
 				6B4C390E1C2B92EC005FEB0E /* A2ProtocalHelper.h */,
-				6B1477691C157CD7008F0EBF /* Foundation */,
 				6B14776E1C157CD7008F0EBF /* NSObject+A2BlockDelegate.h */,
 				6B14776F1C157CD7008F0EBF /* NSObject+A2BlockDelegate.m */,
 				6B1477701C157CD7008F0EBF /* NSObject+A2DynamicDelegate.h */,
 				6B1477711C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m */,
 			);
 			path = DynamicDelegate;
-			sourceTree = "<group>";
-		};
-		6B1477691C157CD7008F0EBF /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				6B14776A1C157CD7008F0EBF /* NSCache+BlocksKit.h */,
-				6B14776B1C157CD7008F0EBF /* NSCache+BlocksKit.m */,
-				6B14776C1C157CD7008F0EBF /* NSURLConnection+BlocksKit.h */,
-				6B14776D1C157CD7008F0EBF /* NSURLConnection+BlocksKit.m */,
-			);
-			path = Foundation;
 			sourceTree = "<group>";
 		};
 		6BC1D6981B897A21002B3C35 = {
@@ -246,6 +228,7 @@
 				TargetAttributes = {
 					6BC1D6A01B897A21002B3C35 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 6HL7BWV9HS;
 					};
 					6BC3E5FC1C06F9DC0031D10D = {
 						CreatedOnToolsVersion = 7.1;
@@ -317,13 +300,11 @@
 				6BC1D6AD1B897A21002B3C35 /* ViewController.m in Sources */,
 				6BC1D6AA1B897A21002B3C35 /* AppDelegate.m in Sources */,
 				6B4C38F51C29680A005FEB0E /* DCDynamicDelegate.m in Sources */,
-				6B1477751C157CD7008F0EBF /* NSURLConnection+BlocksKit.m in Sources */,
 				6B4C38F21C294C6D005FEB0E /* UIPickerView+DCRecorder.m in Sources */,
 				6B1477771C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m in Sources */,
 				6B4E885E1C3D02EB00C091A3 /* CityPickers.m in Sources */,
 				6BC1D6A71B897A21002B3C35 /* main.m in Sources */,
 				6B1477761C157CD7008F0EBF /* NSObject+A2BlockDelegate.m in Sources */,
-				6B1477741C157CD7008F0EBF /* NSCache+BlocksKit.m in Sources */,
 				6BC1D6CF1B897AAD002B3C35 /* DCPickerRecordModel.m in Sources */,
 				6B1477731C157CD7008F0EBF /* A2DynamicDelegate.m in Sources */,
 				6B4C390F1C2B92EC005FEB0E /* A2ProtocalHelper.h in Sources */,
@@ -453,6 +434,7 @@
 		6BC1D6C51B897A21002B3C35 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 6HL7BWV9HS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DCPickerRecord/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -465,6 +447,7 @@
 		6BC1D6C61B897A21002B3C35 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 6HL7BWV9HS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = DCPickerRecord/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

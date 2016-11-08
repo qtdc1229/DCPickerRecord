@@ -18,6 +18,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    [[DCPickerRecorder shareRecorder] dc_pickerView:self.pickerView
+//                                         recordData:@[@[@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六",@"星期天"],@[@"上班",@"不上班"]]
+//                                  didSelectedAction:^(NSIndexPath *index,NSString *data){
+//                                      self.label.text = data;
+//                                  }];
+    
     [[DCPickerRecorder shareRecorder] dc_pickerView:self.pickerView
                                     recordDataClass:NSClassFromString(@"CityPickers")
                                   didSelectedAction:^void(NSIndexPath *index,CityModel *city) {

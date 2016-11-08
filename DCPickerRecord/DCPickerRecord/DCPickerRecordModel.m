@@ -7,6 +7,7 @@
 //
 
 #import "DCPickerRecordModel.h"
+#import <objc/runtime.h>
 
 @implementation NSIndexPath (DCRecorder)
 
@@ -23,6 +24,9 @@
 @interface DCPickerRecordModel ()
 
 @property (nonatomic, readwrite) NSMutableArray    *rowOfComponent;
+
+//保存选择信息
+- (void)saveRowOfComponent:(NSInteger)component row:(NSInteger)row;
 @end
 
 @implementation DCPickerRecordModel
@@ -40,6 +44,18 @@
     return self;
 }
 #pragma mark - =============== DCPickerRecordModelProtocol ===============
+
+-(void)setData:(NSArray *)data {
+    [self backRowOfComponentToZero];
+    [self dc_initRowOfComponents:data.count];
+    objc_setAssociatedObject(self, @selector(data), data, OBJC_ASSOCIATION_COPY);
+}
+
+- (NSArray *)data {
+    return objc_getAssociatedObject(self, @selector(data));
+}
+
+
 + (instancetype)shareRecordModel {
     static DCPickerRecordModel *__shareRecordModel = nil;
     static dispatch_once_t onceToken;
@@ -54,14 +70,19 @@
 }
 
 -(NSInteger)dc_pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return [self dc_rowOfComponent:component];
+    return self.data ? ((NSArray *)self.data[component]).count : 0;
 }
 
 -(NSString *)dc_pickerViewInitTileWithRow:(NSInteger)row inComponent:(NSInteger)component {
-    return @"";
+    id item = self.data[component][row];
+    return [item isKindOfClass:[NSString class]] ? item : @"";
 }
 
 - (void)dc_pickerViewDidSelectedWithRow:(NSInteger)row inComponent:(NSInteger)component pickerView:(UIPickerView *)picker {
+    id item = self.data[component][row];
+    if (self.dc_didSelectedBlock) {
+        self.dc_didSelectedBlock([NSIndexPath indexPathForRow:row inComponent:component],item);
+    }
     [self saveRowOfComponent:component row:row];
 }
 
@@ -72,7 +93,7 @@
     for (int i = 0;i < pickerView.numberOfComponents;i++) {
         rowNumber = _rowOfComponent[i];
         if (rowNumber) {
-            [pickerView selectRow:[rowNumber intValue] inComponent:i animated:NO];
+            [pickerView selectRow:[rowNumber integerValue] inComponent:i animated:NO];
         }else if (i == 0) {
             [pickerView selectRow:0 inComponent:0 animated:NO];
             break;
@@ -86,7 +107,7 @@
             self.rowOfComponent = [NSMutableArray arrayWithCapacity:0];
         }
         for (NSInteger i = MAX(self.numberOfComponent, 0); i < components; i++) {
-            [_rowOfComponent addObject:[NSNumber numberWithInteger:[self readOldDataOfComponent:i]]];
+            [_rowOfComponent addObject:@([self readOldDataOfComponent:i])];
         }
     }
 }
@@ -112,18 +133,22 @@
 
 - (void)backRowOfComponentToZero {
     if (_rowOfComponent) {
-        for (int i = 0; i < self.numberOfComponent; i++) {
-            [_rowOfComponent replaceObjectAtIndex:i withObject:[NSNumber numberWithInteger:0]];
-        }
+        [_rowOfComponent enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj = @0;
+        }];
+        
+//        for (int i = 0; i < self.numberOfComponent; i++) {
+//            [_rowOfComponent replaceObjectAtIndex:i withObject:@0];
+//        }
     }
 }
 
 - (void)saveRowOfComponent:(NSInteger)component row:(NSInteger)row {
-    NSLog(@"component :%ld, row :%ld",(long)component,(long)row);
+    // NSLog(@"component :%ld, row :%ld",(long)component,(long)row);
     if (component < self.numberOfComponent) {
-        [_rowOfComponent replaceObjectAtIndex:component withObject:[NSNumber numberWithInteger:row]];
+        [_rowOfComponent replaceObjectAtIndex:component withObject:@(row)];
     }else if (component == self.numberOfComponent) {
-        [_rowOfComponent addObject:[NSNumber numberWithInteger:row]];
+        [_rowOfComponent addObject:@(row)];
     }
 }
 

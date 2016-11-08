@@ -42,7 +42,23 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
     return __shareDCPickerSourceRecorder;
 }
 
-- (void)dc_pickerView:(UIPickerView *)pickerView recordDataClass:(Class)dataClass didSelectedAction:(void (^)())didSelectedAction {
+- (void)dc_pickerView:(nonnull UIPickerView *)pickerView recordData:(NSArray *)data didSelectedAction:(void (^)())didSelectedAction {
+    NSAssert(pickerView, @"pickerView must nonull");
+    
+    if ([data isKindOfClass:[NSArray class]]) {
+        self.currentPickerRecord = [DCPickerRecordModel shareRecordModel];
+        self.currentPickerRecord.data = data;
+    }
+    
+    if (didSelectedAction && self.currentPickerRecord) {
+        self.currentPickerRecord.dc_didSelectedBlock = didSelectedAction;
+    }
+    
+    [pickerView reloadAllComponents];
+    [self.currentPickerRecord dc_PickerViewSelectedComponentsRow:pickerView];
+}
+
+- (void)dc_pickerView:(UIPickerView *)pickerView recorderClass:(Class)dataClass didSelectedAction:(void (^)())didSelectedAction {
     NSAssert(pickerView, @"pickerView must nonull");
     if ([dataClass isSubclassOfClass:[DCPickerRecordModel class]]) {
         _pickerDataClass = dataClass;

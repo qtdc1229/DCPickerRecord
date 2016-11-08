@@ -14,9 +14,12 @@
 @property (nonatomic ,readonly)NSInteger      component;
 
 + (instancetype)indexPathForRow:(NSInteger)row inComponent:(NSInteger)component;
+
 @end
 
 @protocol DCPickerRecordModelProtocol <NSObject>
+
+@property (nonatomic ,copy)NSArray   *data;
 /**
  *  @brief  get the instance of class
  *
@@ -70,9 +73,6 @@
 @property (nonatomic, readonly) NSInteger         numberOfComponent;
 @property (nonatomic, readonly) NSMutableArray    *rowOfComponent;
 
-//@required
-
-//@optional
 /**
  *  @brief 重新选择上次已选数据
  *
@@ -92,8 +92,7 @@
 //获取之前的选择信息
 - (NSInteger)readOldDataOfComponent:(NSInteger)component;
 
-//保存选择信息
-- (void)saveRowOfComponent:(NSInteger)component row:(NSInteger)row;
+
 @end
 
 
