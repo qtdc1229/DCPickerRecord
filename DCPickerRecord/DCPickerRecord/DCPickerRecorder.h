@@ -11,17 +11,8 @@
 #import "DCPickerRecordModel.h"
 NS_ASSUME_NONNULL_BEGIN
 @interface DCPickerRecorder : NSObject
-//@property (nonatomic ,weak) Class                               pickerDataClass;
-@property (nonatomic ,readonly) DCPickerRecordModel             *currentPickerRecord;
 
-///** The block to be fired when set components. */
-//@property (nonatomic, copy, setter = dc_setNumberOfComponentsBlock:) NSInteger (^dc_numberOfComponentsBlock)(UIPickerView *pickerView);
-//
-///** The block to be fired set titles in index. */
-//@property (nonatomic, copy, setter = dc_setInitTileBlock:) void (^dc_initTileBlock)(NSIndexPath *index);
-//
-///** The block to be fired when set row in component. */
-//@property (nonatomic, copy, setter = dc_setNumberOfRowsBlock:) void (^dc_numberOfRowsBlock)(NSInteger component,UIPickerView *pickerView);
+@property (nonatomic ,readonly) DCPickerRecordModel             *currentPickerRecord;
 
 
 + (instancetype)shareRecorder;
@@ -29,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)dc_pickerView:(nonnull UIPickerView *)pickerView recordData:(NSArray *)data didSelectedAction:(void (^)())didSelectedAction;
 
 - (void)dc_pickerView:(nonnull UIPickerView *)pickerView recorderClass:(Class)dataClass didSelectedAction:(void (^)())didSelectedAction;
+
+- (void)dc_pickerView:(nonnull UIPickerView *)pickerView recorderModel:(DCPickerRecordModel *)model;
 
 @end
 NS_ASSUME_NONNULL_END

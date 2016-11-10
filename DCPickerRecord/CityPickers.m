@@ -40,7 +40,7 @@
     return row;
 }
 
--(NSString *)dc_pickerViewInitTileWithRow:(NSInteger)row inComponent:(NSInteger)component {
+-(NSString *)dc_pickerViewInitTitleWithRow:(NSInteger)row inComponent:(NSInteger)component {
     NSString *title = (component == 0) ?
     ((CityModel *)self.cityArray[row][0]).province :
     ((CityModel *)self.cityArray[[self dc_rowOfComponent:0]][row]).name;

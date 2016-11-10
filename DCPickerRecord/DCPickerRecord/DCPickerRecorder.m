@@ -13,7 +13,7 @@
 DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
 
 @interface DCPickerRecorder ()
-
+@property (nonatomic ,weak) Class                               pickerDataClass;
 @property (nonatomic ,readwrite) DCPickerRecordModel           *currentPickerRecord;
 @end
 
@@ -67,6 +67,14 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
     if (didSelectedAction && self.currentPickerRecord) {
         self.currentPickerRecord.dc_didSelectedBlock = didSelectedAction;
     }
+    [pickerView reloadAllComponents];
+    [self.currentPickerRecord dc_PickerViewSelectedComponentsRow:pickerView];
+}
+
+- (void)dc_pickerView:(nonnull UIPickerView *)pickerView recorderModel:(DCPickerRecordModel *)model {
+    NSAssert(pickerView, @"pickerView must nonull");
+    self.currentPickerRecord = model;
+    
     [pickerView reloadAllComponents];
     [self.currentPickerRecord dc_PickerViewSelectedComponentsRow:pickerView];
 }

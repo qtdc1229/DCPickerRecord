@@ -9,6 +9,7 @@
 #import "UIPickerView+DCRecorder.h"
 #import "A2DynamicDelegate.h"
 #import "NSObject+A2BlockDelegate.h"
+
 #import "DCPickerRecorder.h"
 
 @interface A2DynamicUIPickerViewDelegate : A2DynamicDelegate <UIPickerViewDelegate>
@@ -24,7 +25,7 @@
         ret = [realDelegate pickerView:pickerView titleForRow:row forComponent:component];
     }
     if ([DCPickerRecorder shareRecorder].currentPickerRecord) {
-        ret = [[DCPickerRecorder shareRecorder].currentPickerRecord dc_pickerViewInitTileWithRow:row inComponent:component];
+        ret = [[DCPickerRecorder shareRecorder].currentPickerRecord dc_pickerViewInitTitleWithRow:row inComponent:component];
     }
     
     return ret;

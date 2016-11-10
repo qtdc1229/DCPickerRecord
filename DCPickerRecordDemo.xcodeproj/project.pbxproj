@@ -13,7 +13,6 @@
 		6B1477771C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B1477711C157CD7008F0EBF /* NSObject+A2DynamicDelegate.m */; };
 		6B4C38F21C294C6D005FEB0E /* UIPickerView+DCRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C38F11C294C6D005FEB0E /* UIPickerView+DCRecorder.m */; };
 		6B4C38F51C29680A005FEB0E /* DCDynamicDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C38F41C29680A005FEB0E /* DCDynamicDelegate.m */; };
-		6B4C390F1C2B92EC005FEB0E /* A2ProtocalHelper.h in Sources */ = {isa = PBXBuildFile; fileRef = 6B4C390E1C2B92EC005FEB0E /* A2ProtocalHelper.h */; };
 		6B4E885E1C3D02EB00C091A3 /* CityPickers.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B4E885D1C3D02EB00C091A3 /* CityPickers.m */; };
 		6BC1D6A71B897A21002B3C35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D6A61B897A21002B3C35 /* main.m */; };
 		6BC1D6AA1B897A21002B3C35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D6A91B897A21002B3C35 /* AppDelegate.m */; };
@@ -37,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		154D0AAC1DD1E7ED00DB856E /* A2ProtocalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2ProtocalHelper.h; sourceTree = "<group>"; };
 		6B1477651C157CD7008F0EBF /* A2BlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2BlockInvocation.h; sourceTree = "<group>"; };
 		6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A2BlockInvocation.m; sourceTree = "<group>"; };
 		6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2DynamicDelegate.h; sourceTree = "<group>"; };
@@ -49,7 +49,6 @@
 		6B4C38F11C294C6D005FEB0E /* UIPickerView+DCRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIPickerView+DCRecorder.m"; sourceTree = "<group>"; };
 		6B4C38F31C29680A005FEB0E /* DCDynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCDynamicDelegate.h; sourceTree = "<group>"; };
 		6B4C38F41C29680A005FEB0E /* DCDynamicDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCDynamicDelegate.m; sourceTree = "<group>"; };
-		6B4C390E1C2B92EC005FEB0E /* A2ProtocalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2ProtocalHelper.h; sourceTree = "<group>"; };
 		6B4E885C1C3D02EB00C091A3 /* CityPickers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityPickers.h; sourceTree = "<group>"; };
 		6B4E885D1C3D02EB00C091A3 /* CityPickers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityPickers.m; sourceTree = "<group>"; };
 		6BA9F8A41C059F47008D1513 /* DCCommonConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DCCommonConstants.h; sourceTree = "<group>"; };
@@ -93,11 +92,11 @@
 		6B1477641C157CD7008F0EBF /* DynamicDelegate */ = {
 			isa = PBXGroup;
 			children = (
+				154D0AAC1DD1E7ED00DB856E /* A2ProtocalHelper.h */,
 				6B1477651C157CD7008F0EBF /* A2BlockInvocation.h */,
 				6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */,
 				6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */,
 				6B1477681C157CD7008F0EBF /* A2DynamicDelegate.m */,
-				6B4C390E1C2B92EC005FEB0E /* A2ProtocalHelper.h */,
 				6B14776E1C157CD7008F0EBF /* NSObject+A2BlockDelegate.h */,
 				6B14776F1C157CD7008F0EBF /* NSObject+A2BlockDelegate.m */,
 				6B1477701C157CD7008F0EBF /* NSObject+A2DynamicDelegate.h */,
@@ -307,7 +306,6 @@
 				6B1477761C157CD7008F0EBF /* NSObject+A2BlockDelegate.m in Sources */,
 				6BC1D6CF1B897AAD002B3C35 /* DCPickerRecordModel.m in Sources */,
 				6B1477731C157CD7008F0EBF /* A2DynamicDelegate.m in Sources */,
-				6B4C390F1C2B92EC005FEB0E /* A2ProtocalHelper.h in Sources */,
 				6BC1D6D01B897AAD002B3C35 /* DCPickerRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

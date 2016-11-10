@@ -20,6 +20,7 @@
 @protocol DCPickerRecordModelProtocol <NSObject>
 
 @property (nonatomic ,copy)NSArray   *data;
+@property (nonatomic ,copy) void (^dc_didSelectedBlock)();
 /**
  *  @brief  get the instance of class
  *
@@ -34,7 +35,7 @@
  *
  *  @return 列返回数据
  */
-- (NSString *)dc_pickerViewInitTileWithRow:(NSInteger)row inComponent:(NSInteger)component;
+- (NSString *)dc_pickerViewInitTitleWithRow:(NSInteger)row inComponent:(NSInteger)component;
 /**
  *  @brief picker did select a row
  *
@@ -60,16 +61,11 @@
  *  @return 返回某一行有多少列
  */
 - (NSInteger)dc_pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component;
-@optional
-/**
- *  @brief 确认动作
- */
-- (void)dc_confirmAction;
 @end
+
 
 @interface DCPickerRecordModel : NSObject <DCPickerRecordModelProtocol>
 
-@property (nonatomic ,copy) void (^dc_didSelectedBlock)();
 @property (nonatomic, readonly) NSInteger         numberOfComponent;
 @property (nonatomic, readonly) NSMutableArray    *rowOfComponent;
 
@@ -92,8 +88,24 @@
 //获取之前的选择信息
 - (NSInteger)readOldDataOfComponent:(NSInteger)component;
 
-
 @end
 
+@interface DCPickerRecordModel (RecordModelCreation)
+
++ (instancetype)recordModelData:(NSArray *)data
+              numberOfComponent:(NSInteger (^)())components
+                rowsInComponent:(NSInteger (^)(NSInteger component))rowsInComponent
+                         titles:(NSString *(^)(NSIndexPath *index,NSArray *data))titleBlock
+                    didSelected:(void (^)())selectedBlock;
+
++ (instancetype)recordModelData:(NSArray *)data;
+@end
+
+@interface DCPickerRecordModel (BlocksKit)
+
+@property(nonatomic ,copy)NSInteger (^dc_numberOfComponentsBlock)();
+@property(nonatomic ,copy)NSInteger (^dc_numberOfRowsInComponentBlock)(NSInteger component);
+@property(nonatomic ,copy)NSString *(^dc_initTitleWithIndexPathBlock)(NSIndexPath *index,NSArray *data);
+@end
 
 
