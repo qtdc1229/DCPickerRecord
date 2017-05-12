@@ -9,12 +9,12 @@
 
 #pragma mark - Declarations and macros
 
-extern Protocol *a2_dataSourceProtocol(Class cls);
-extern Protocol *a2_delegateProtocol(Class cls);
+extern Protocol *d2_dataSourceProtocol(Class cls);
+extern Protocol *d2_delegateProtocol(Class cls);
 
 #pragma mark - Functions
 
-static BOOL bk_object_isKindOfClass(id obj, Class testClass)
+static BOOL dc_object_isKindOfClass(id obj, Class testClass)
 {
 	BOOL isKindOfClass = NO;
 	Class cls = object_getClass(obj);
@@ -26,14 +26,14 @@ static BOOL bk_object_isKindOfClass(id obj, Class testClass)
 	return isKindOfClass;
 }
 
-static Protocol *a2_protocolForDelegatingObject(id obj, Protocol *protocol)
+static Protocol *d2_protocolForDelegatingObject(id obj, Protocol *protocol)
 {
 	NSString *protocolName = NSStringFromProtocol(protocol);
 	if ([protocolName hasSuffix:@"Delegate"]) {
-		Protocol *p = a2_delegateProtocol([obj class]);
+		Protocol *p = d2_delegateProtocol([obj class]);
 		if (p) return p;
 	} else if ([protocolName hasSuffix:@"DataSource"]) {
-		Protocol *p = a2_dataSourceProtocol([obj class]);
+		Protocol *p = d2_dataSourceProtocol([obj class]);
 		if (p) return p;
 	}
 
@@ -148,14 +148,14 @@ static SEL setterForProperty(objc_property_t property, const char *name)
 }
 
 static inline SEL prefixedSelector(SEL original) {
-	return selectorWithPattern("a2_", sel_getName(original), NULL);
+	return selectorWithPattern("d2_", sel_getName(original), NULL);
 }
 
 #pragma mark -
 
 typedef struct {
 	SEL setter;
-	SEL a2_setter;
+	SEL d2_setter;
 	SEL getter;
 } A2BlockDelegateInfo;
 
@@ -170,21 +170,21 @@ static NSString *A2BlockDelegateInfoDescribe(const void *__unused item) {
 }
 
 static inline A2DynamicDelegate *getDynamicDelegate(NSObject *delegatingObject, Protocol *protocol, const A2BlockDelegateInfo *info, BOOL ensuring) {
-	A2DynamicDelegate *dynamicDelegate = [delegatingObject bk_dynamicDelegateForProtocol:a2_protocolForDelegatingObject(delegatingObject, protocol)];
+	A2DynamicDelegate *dynamicDelegate = [delegatingObject dc_dynamicDelegateForProtocol:d2_protocolForDelegatingObject(delegatingObject, protocol)];
 
 	if (!info || !info->setter || !info->getter) {
 		return dynamicDelegate;
 	}
 
-	if (!info->a2_setter && !info->setter) { return dynamicDelegate; }
+	if (!info->d2_setter && !info->setter) { return dynamicDelegate; }
 
 	id (*getterDispatch)(id, SEL) = (id (*)(id, SEL)) objc_msgSend;
 	id originalDelegate = getterDispatch(delegatingObject, info->getter);
 
-	if (bk_object_isKindOfClass(originalDelegate, A2DynamicDelegate.class)) { return dynamicDelegate; }
+	if (dc_object_isKindOfClass(originalDelegate, A2DynamicDelegate.class)) { return dynamicDelegate; }
 
 	void (*setterDispatch)(id, SEL, id) = (void (*)(id, SEL, id)) objc_msgSend;
-	setterDispatch(delegatingObject, info->a2_setter ?: info->setter, dynamicDelegate);
+	setterDispatch(delegatingObject, info->d2_setter ?: info->setter, dynamicDelegate);
 
 	return dynamicDelegate;
 }
@@ -203,7 +203,7 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 
 #pragma mark Helpers
 
-+ (NSMapTable *)bk_delegateInfoByProtocol:(BOOL)createIfNeeded
++ (NSMapTable *)dc_delegateInfoByProtocol:(BOOL)createIfNeeded
 {
 	NSMapTable *delegateInfo = objc_getAssociatedObject(self, _cmd);
 	if (delegateInfo || !createIfNeeded) { return delegateInfo; }
@@ -219,12 +219,12 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 	return delegateInfo;
 }
 
-+ (const A2BlockDelegateInfo *)bk_delegateInfoForProtocol:(Protocol *)protocol
++ (const A2BlockDelegateInfo *)dc_delegateInfoForProtocol:(Protocol *)protocol
 {
 	A2BlockDelegateInfo *infoAsPtr = NULL;
 	Class cls = self;
 	while ((infoAsPtr == NULL || infoAsPtr->getter == NULL) && cls != nil && cls != NSObject.class) {
-		NSMapTable *map = [cls bk_delegateInfoByProtocol:NO];
+		NSMapTable *map = [cls dc_delegateInfoByProtocol:NO];
 		infoAsPtr = (__bridge void *)[map objectForKey:protocol];
 		cls = [cls superclass];
 	}
@@ -234,17 +234,17 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 
 #pragma mark Linking block properties
 
-+ (void)bk_linkDataSourceMethods:(NSDictionary *)dictionary
++ (void)dc_linkDataSourceMethods:(NSDictionary *)dictionary
 {
-	[self bk_linkProtocol:a2_dataSourceProtocol(self) methods:dictionary];
+	[self dc_linkProtocol:d2_dataSourceProtocol(self) methods:dictionary];
 }
 
-+ (void)bk_linkDelegateMethods:(NSDictionary *)dictionary
++ (void)dc_linkDelegateMethods:(NSDictionary *)dictionary
 {
-	[self bk_linkProtocol:a2_delegateProtocol(self) methods:dictionary];
+	[self dc_linkProtocol:d2_delegateProtocol(self) methods:dictionary];
 }
 
-+ (void)bk_linkProtocol:(Protocol *)protocol methods:(NSDictionary *)dictionary
++ (void)dc_linkProtocol:(Protocol *)protocol methods:(NSDictionary *)dictionary
 {
 	[dictionary enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, NSString *selectorName, BOOL *stop) {
 		const char *name = propertyName.UTF8String;
@@ -265,7 +265,7 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 
 		if (class_respondsToSelector(self, setter) || class_respondsToSelector(self, getter)) { return; }
 
-		const A2BlockDelegateInfo *info = [self bk_delegateInfoForProtocol:protocol];
+		const A2BlockDelegateInfo *info = [self dc_delegateInfoForProtocol:protocol];
 
 		IMP getterImplementation = imp_implementationWithBlock(^(NSObject *delegatingObject) {
 			A2DynamicDelegate *delegate = getDynamicDelegate(delegatingObject, protocol, info, NO);
@@ -289,38 +289,38 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 
 #pragma mark Dynamic Delegate Replacement
 
-+ (void)bk_registerDynamicDataSource
++ (void)dc_registerDynamicDataSource
 {
-	[self bk_registerDynamicDelegateNamed:@"dataSource" forProtocol:a2_dataSourceProtocol(self)];
+	[self dc_registerDynamicDelegateNamed:@"dataSource" forProtocol:d2_dataSourceProtocol(self)];
 }
-+ (void)bk_registerDynamicDelegate
++ (void)dc_registerDynamicDelegate
 {
-	[self bk_registerDynamicDelegateNamed:@"delegate" forProtocol:a2_delegateProtocol(self)];
-}
-
-+ (void)bk_registerDynamicDataSourceNamed:(NSString *)dataSourceName
-{
-	[self bk_registerDynamicDelegateNamed:dataSourceName forProtocol:a2_dataSourceProtocol(self)];
-}
-+ (void)bk_registerDynamicDelegateNamed:(NSString *)delegateName
-{
-	[self bk_registerDynamicDelegateNamed:delegateName forProtocol:a2_delegateProtocol(self)];
+	[self dc_registerDynamicDelegateNamed:@"delegate" forProtocol:d2_delegateProtocol(self)];
 }
 
-+ (void)bk_registerDynamicDelegateNamed:(NSString *)delegateName forProtocol:(Protocol *)protocol
++ (void)dc_registerDynamicDataSourceNamed:(NSString *)dataSourceName
 {
-	NSMapTable *propertyMap = [self bk_delegateInfoByProtocol:YES];
+	[self dc_registerDynamicDelegateNamed:dataSourceName forProtocol:d2_dataSourceProtocol(self)];
+}
++ (void)dc_registerDynamicDelegateNamed:(NSString *)delegateName
+{
+	[self dc_registerDynamicDelegateNamed:delegateName forProtocol:d2_delegateProtocol(self)];
+}
+
++ (void)dc_registerDynamicDelegateNamed:(NSString *)delegateName forProtocol:(Protocol *)protocol
+{
+	NSMapTable *propertyMap = [self dc_delegateInfoByProtocol:YES];
 	A2BlockDelegateInfo *infoAsPtr = (__bridge void *)[propertyMap objectForKey:protocol];
 	if (infoAsPtr != NULL) { return; }
 
 	const char *name = delegateName.UTF8String;
 	objc_property_t property = class_getProperty(self, name);
 	SEL setter = setterForProperty(property, name);
-	SEL a2_setter = prefixedSelector(setter);
+	SEL d2_setter = prefixedSelector(setter);
 	SEL getter = getterForProperty(property, name);
 
 	A2BlockDelegateInfo info = {
-		setter, a2_setter, getter
+		setter, d2_setter, getter
 	};
 
 	[propertyMap setObject:(__bridge id)&info forKey:protocol];
@@ -334,29 +334,29 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 		dynamicDelegate.realDelegate = delegate;
 	});
 
-	if (!swizzleWithIMP(self, setter, a2_setter, setterImplementation, "v@:@", YES)) {
+	if (!swizzleWithIMP(self, setter, d2_setter, setterImplementation, "v@:@", YES)) {
 		bzero(infoAsPtr, sizeof(A2BlockDelegateInfo));
 		return;
 	}
 
 	if (![self instancesRespondToSelector:getter]) {
 		IMP getterImplementation = imp_implementationWithBlock(^(NSObject *delegatingObject) {
-			return [delegatingObject bk_dynamicDelegateForProtocol:a2_protocolForDelegatingObject(delegatingObject, protocol)];
+			return [delegatingObject dc_dynamicDelegateForProtocol:d2_protocolForDelegatingObject(delegatingObject, protocol)];
 		});
 
 		addMethodWithIMP(self, getter, NULL, getterImplementation, "@@:", NO);
 	}
 }
 
-- (id)bk_ensuredDynamicDelegate
+- (id)dc_ensuredDynamicDelegate
 {
-	Protocol *protocol = a2_delegateProtocol(self.class);
-	return [self bk_ensuredDynamicDelegateForProtocol:protocol];
+	Protocol *protocol = d2_delegateProtocol(self.class);
+	return [self dc_ensuredDynamicDelegateForProtocol:protocol];
 }
 
-- (id)bk_ensuredDynamicDelegateForProtocol:(Protocol *)protocol
+- (id)dc_ensuredDynamicDelegateForProtocol:(Protocol *)protocol
 {
-	const A2BlockDelegateInfo *info = [self.class bk_delegateInfoForProtocol:protocol];
+	const A2BlockDelegateInfo *info = [self.class dc_delegateInfoForProtocol:protocol];
 	return getDynamicDelegate(self, protocol, info, YES);
 }
 
@@ -365,11 +365,11 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 @implementation NSObject (DCDynamicDelegate)
 
 + (void)dc_linkDataSourceMethods:(NSDictionary *)dictionary {
-    [self bk_linkProtocol:a2_dataSourceProtocol(self) methods:dictionary];
+    [self dc_linkProtocol:d2_dataSourceProtocol(self) methods:dictionary];
 }
 
 + (void)dc_linkDelegateMethods:(NSDictionary *)dictionary {
-    [self bk_linkProtocol:a2_delegateProtocol(self) methods:dictionary];
+    [self dc_linkProtocol:d2_delegateProtocol(self) methods:dictionary];
 }
 
 + (void)dc_linkProtocol:(Protocol *)protocol methods:(NSDictionary *)dictionary {
@@ -379,19 +379,19 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 }
 
 + (void)dc_registerDynamicDataSource {
-    [self dc_registerDynamicDelegateNamed:@"dataSource" forProtocol:a2_dataSourceProtocol(self)];
+    [self dc_registerDynamicDelegateNamed:@"dataSource" forProtocol:d2_dataSourceProtocol(self)];
 }
 
 + (void)dc_registerDynamicDelegate {
-    [self dc_registerDynamicDelegateNamed:@"Delegate" forProtocol:a2_delegateProtocol(self)];
+    [self dc_registerDynamicDelegateNamed:@"Delegate" forProtocol:d2_delegateProtocol(self)];
 }
 
 + (void)dc_registerDynamicDataSourceNamed:(NSString *)dataSourceName {
-    [self dc_registerDynamicDelegateNamed:dataSourceName forProtocol:a2_dataSourceProtocol(self)];
+    [self dc_registerDynamicDelegateNamed:dataSourceName forProtocol:d2_dataSourceProtocol(self)];
 }
 
 + (void)dc_registerDynamicDelegateNamed:(NSString *)delegateName {
-    [self dc_registerDynamicDelegateNamed:delegateName forProtocol:a2_delegateProtocol(self)];
+    [self dc_registerDynamicDelegateNamed:delegateName forProtocol:d2_delegateProtocol(self)];
 }
 
 + (void)dc_registerDynamicDelegateNamed:(NSString *)delegateName forProtocol:(Protocol *)protocol {
@@ -399,12 +399,12 @@ typedef A2DynamicDelegate *(^A2GetDynamicDelegateBlock)(NSObject *, BOOL);
 }
 
 - (id)dc_ensuredDynamicDelegate {
-    Protocol *protocol = a2_delegateProtocol(self.class);
+    Protocol *protocol = d2_delegateProtocol(self.class);
     return [self dc_ensuredDynamicDelegateForProtocol:protocol];
 }
 
 - (id)dc_ensuredDynamicDelegateForProtocol:(Protocol *)protocol {
-    const A2BlockDelegateInfo *info = [self.class bk_delegateInfoForProtocol:protocol];
+    const A2BlockDelegateInfo *info = [self.class dc_delegateInfoForProtocol:protocol];
     return getDynamicDelegate(self, protocol, info, YES);
 }
 

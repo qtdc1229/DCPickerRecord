@@ -21,7 +21,7 @@
 								  otherButtonTitles:@"Woo!", nil];
 
 		// Get the dynamic delegate
-		A2DynamicDelegate *dd = alertView.bk_dynamicDelegate;
+		A2DynamicDelegate *dd = alertView.dc_dynamicDelegate;
 
 		// Implement -alertViewShouldEnableFirstOtherButton:
 		[dd implementMethod:@selector(alertViewShouldEnableFirstOtherButton:) withBlock:^(UIAlertView *alertView) {

@@ -81,8 +81,8 @@
 
 +(void)load {
     @autoreleasepool {
-        [self bk_registerDynamicDataSource];
-        [self bk_registerDynamicDelegate];
+        [self dc_registerDynamicDataSource];
+        [self dc_registerDynamicDelegate];
     }
 }
 

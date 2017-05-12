@@ -6,10 +6,10 @@
 #import <objc/runtime.h>
 #import "NSObject+A2DynamicDelegate.h"
 
-extern Protocol *a2_dataSourceProtocol(Class cls);
-extern Protocol *a2_delegateProtocol(Class cls);
+extern Protocol *d2_dataSourceProtocol(Class cls);
+extern Protocol *d2_delegateProtocol(Class cls);
 
-static Class a2_dynamicDelegateClass(Class cls, NSString *suffix)
+static Class d2_dynamicDelegateClass(Class cls, NSString *suffix)
 {
 	while (cls) {
 		NSString *className = [NSString stringWithFormat:@"A2Dynamic%@%@", NSStringFromClass(cls), suffix];
@@ -22,7 +22,7 @@ static Class a2_dynamicDelegateClass(Class cls, NSString *suffix)
 	return [A2DynamicDelegate class];
 }
 
-static dispatch_queue_t a2_backgroundQueue(void)
+static dispatch_queue_t d2_backgroundQueue(void)
 {
 	static dispatch_once_t onceToken;
 	static dispatch_queue_t backgroundQueue = nil;
@@ -34,31 +34,31 @@ static dispatch_queue_t a2_backgroundQueue(void)
 
 @implementation NSObject (A2DynamicDelegate)
 
-- (id)bk_dynamicDataSource
+- (id)dc_dynamicDataSource
 {
-	Protocol *protocol = a2_dataSourceProtocol([self class]);
-	Class class = a2_dynamicDelegateClass([self class], @"DataSource");
-	return [self bk_dynamicDelegateWithClass:class forProtocol:protocol];
+	Protocol *protocol = d2_dataSourceProtocol([self class]);
+	Class class = d2_dynamicDelegateClass([self class], @"DataSource");
+	return [self dc_dynamicDelegateWithClass:class forProtocol:protocol];
 }
-- (id)bk_dynamicDelegate
+- (id)dc_dynamicDelegate
 {
-	Protocol *protocol = a2_delegateProtocol([self class]);
-	Class class = a2_dynamicDelegateClass([self class], @"Delegate");
-	return [self bk_dynamicDelegateWithClass:class forProtocol:protocol];
+	Protocol *protocol = d2_delegateProtocol([self class]);
+	Class class = d2_dynamicDelegateClass([self class], @"Delegate");
+	return [self dc_dynamicDelegateWithClass:class forProtocol:protocol];
 }
-- (id)bk_dynamicDelegateForProtocol:(Protocol *)protocol
+- (id)dc_dynamicDelegateForProtocol:(Protocol *)protocol
 {
 	Class class = [A2DynamicDelegate class];
 	NSString *protocolName = NSStringFromProtocol(protocol);
 	if ([protocolName hasSuffix:@"Delegate"]) {
-		class = a2_dynamicDelegateClass([self class], @"Delegate");
+		class = d2_dynamicDelegateClass([self class], @"Delegate");
 	} else if ([protocolName hasSuffix:@"DataSource"]) {
-		class = a2_dynamicDelegateClass([self class], @"DataSource");
+		class = d2_dynamicDelegateClass([self class], @"DataSource");
 	}
 
-	return [self bk_dynamicDelegateWithClass:class forProtocol:protocol];
+	return [self dc_dynamicDelegateWithClass:class forProtocol:protocol];
 }
-- (id)bk_dynamicDelegateWithClass:(Class)cls forProtocol:(Protocol *)protocol
+- (id)dc_dynamicDelegateWithClass:(Class)cls forProtocol:(Protocol *)protocol
 {
 	/**
 	 * Storing the dynamic delegate as an associated object of the delegating
@@ -72,7 +72,7 @@ static dispatch_queue_t a2_backgroundQueue(void)
 
 	__block A2DynamicDelegate *dynamicDelegate;
 
-	dispatch_sync(a2_backgroundQueue(), ^{
+	dispatch_sync(d2_backgroundQueue(), ^{
 		dynamicDelegate = objc_getAssociatedObject(self, (__bridge const void *)protocol);
 
 		if (!dynamicDelegate)

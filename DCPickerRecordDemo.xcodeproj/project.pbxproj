@@ -36,7 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		154D0AAC1DD1E7ED00DB856E /* A2ProtocalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2ProtocalHelper.h; sourceTree = "<group>"; };
+		154D0AAC1DD1E7ED00DB856E /* DCProtocalHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCProtocalHelper.h; sourceTree = "<group>"; };
 		6B1477651C157CD7008F0EBF /* A2BlockInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2BlockInvocation.h; sourceTree = "<group>"; };
 		6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = A2BlockInvocation.m; sourceTree = "<group>"; };
 		6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = A2DynamicDelegate.h; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 		6B1477641C157CD7008F0EBF /* DynamicDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				154D0AAC1DD1E7ED00DB856E /* A2ProtocalHelper.h */,
+				154D0AAC1DD1E7ED00DB856E /* DCProtocalHelper.h */,
 				6B1477651C157CD7008F0EBF /* A2BlockInvocation.h */,
 				6B1477661C157CD7008F0EBF /* A2BlockInvocation.m */,
 				6B1477671C157CD7008F0EBF /* A2DynamicDelegate.h */,

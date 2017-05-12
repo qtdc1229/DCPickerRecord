@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #pragma mark - Helper functions
 
-static Protocol *a2_classProtocol(Class _cls, NSString *suffix, NSString *description)
+static Protocol *d2_classProtocol(Class _cls, NSString *suffix, NSString *description)
 {
     Class cls = _cls;
     while (cls) {
@@ -25,22 +25,22 @@ static Protocol *a2_classProtocol(Class _cls, NSString *suffix, NSString *descri
     return nil;
 }
 
-Protocol *a2_dataSourceProtocol(Class cls)
+Protocol *d2_dataSourceProtocol(Class cls)
 {
-    return a2_classProtocol(cls, @"DataSource", @"data source");
+    return d2_classProtocol(cls, @"DataSource", @"data source");
 }
-Protocol *a2_delegateProtocol(Class cls)
+Protocol *d2_delegateProtocol(Class cls)
 {
-    return a2_classProtocol(cls, @"Delegate", @"delegate");
+    return d2_classProtocol(cls, @"Delegate", @"delegate");
 }
-Protocol *a2_protocolForDelegatingObject(id obj, Protocol *protocol)
+Protocol *d2_protocolForDelegatingObject(id obj, Protocol *protocol)
 {
     NSString *protocolName = NSStringFromProtocol(protocol);
     if ([protocolName hasSuffix:@"Delegate"]) {
-        Protocol *p = a2_delegateProtocol([obj class]);
+        Protocol *p = d2_delegateProtocol([obj class]);
         if (p) return p;
     } else if ([protocolName hasSuffix:@"DataSource"]) {
-        Protocol *p = a2_dataSourceProtocol([obj class]);
+        Protocol *p = d2_dataSourceProtocol([obj class]);
         if (p) return p;
     }
     
