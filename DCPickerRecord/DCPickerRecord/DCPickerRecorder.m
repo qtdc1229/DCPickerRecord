@@ -20,7 +20,7 @@ DCPickerRecorder *__shareDCPickerSourceRecorder = nil;
 @implementation DCPickerRecorder
 
 +(void)load {
-        NSLog(@"-------------- DCPickerRecord Version %@ --------------",DC_CONSTANTS_VERSION);
+        NSLog(@"------------- DCPickerRecord Version %@ --------------",DC_CONSTANTS_VERSION);
 }
 
 - (instancetype)init {
